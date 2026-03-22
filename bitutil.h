@@ -5,6 +5,8 @@
 #ifndef BITUTIL_H
 #define BITUTIL_H
 
+#include <stdbool.h>
+
 /*
  * In C, there is no data type that is one bit in size, so we need to implement
  * a bit vector data structure ourselves.
@@ -21,5 +23,7 @@ typedef struct bit_vect_s {
 bit_vect *bit_vect_new(size_t bits);
 
 void bit_vect_free(bit_vect *vect);
+
+bool bit_vect_get(bit_vect *vect, size_t i);
 
 #endif

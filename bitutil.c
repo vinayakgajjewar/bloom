@@ -37,3 +37,20 @@ void bit_vect_free(bit_vect *vect) {
     free(vect->mem);
     free(vect);
 }
+
+/*
+ * TODO
+ * I am not quite sure how the calculation for the bit offset works.
+ *
+ * The calculation for the chunk offset works because integer division in C just
+ * discards the fractional portion.
+ */
+bool bit_vect_get(bit_vect *vect, size_t i) {
+    if (i >= vect->size) {
+        fprintf(stderr, "Out of bounds; i=%zu, sz=%zu", i, vect->size);
+    }
+    size_t chunk_offset = i / BITS_IN_TYPE(uint32_t);
+    size_t bit_offset = i & (BITS_IN_TYPE(uint32_t) - 1);
+    uint32_t byte = vect->mem[chunk_offset];
+    return (byte >> bit_offset) & 1;
+}
