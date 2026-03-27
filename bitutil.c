@@ -54,3 +54,18 @@ bool bit_vect_get(bit_vect *vect, size_t i) {
     uint32_t byte = vect->mem[chunk_offset];
     return (byte >> bit_offset) & 1;
 }
+
+void bit_vect_set(bit_vect *vect, size_t i, bool val) {
+    if (i >= vect->size) {
+        fprintf(stderr, "Out of bounds: i=%zu, sz=%zu", i, vect->size);
+        exit(EXIT_FAILURE);
+    }
+    size_t chunk_offset = i / BITS_IN_TYPE(uint32_t);
+    size_t bit_offset = i & (BITS_IN_TYPE(uint32_t) - 1);
+    uint32_t *byte = &(vect->mem[chunk_offset]);
+    if (val) {
+        *byte |= ((uint32_t) 1) << bit_offset;
+    } else {
+        *byte &= ~(1 << bit_offset);
+    }
+}

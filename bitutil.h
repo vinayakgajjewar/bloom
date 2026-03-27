@@ -26,4 +26,6 @@ void bit_vect_free(bit_vect *vect);
 
 bool bit_vect_get(bit_vect *vect, size_t i);
 
+void bit_vect_set(bit_vect *vect, size_t i, bool val);
+
 #endif
